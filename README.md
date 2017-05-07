@@ -1,1 +1,2 @@
 # DigiRec
+MNIST image recognition 
