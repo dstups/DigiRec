@@ -1,13 +1,25 @@
 import pandas as pd 
 import numpy as np 
-import tensorflow as tf 
+from random import randint
 
 
-df_train = pd.read_csv('data/train.csv')
-arr_train = df_train.as_matrix(columns=None)
+def to_array(filepath):
+	df_train = pd.read_csv(filepath)
+	arr_train = df_train.as_matrix(columns=None)
+	return arr_train
 
-print (arr_train.shape)
 
-x = tf.placeholder(tf.float32, [None, 784])
-W = tf.Variable(tf.zeros[784, 10])
-y = tf.Variable(tf.zeros[10])
+def randomsample(array, interval):
+	max_index = len(array) - (1  + interval)
+	random_index = randint(0, max_index)
+
+	start_row = random_index
+	end_row = start_row + interval
+	return start_row, end_row
+
+
+
+
+
+
+
