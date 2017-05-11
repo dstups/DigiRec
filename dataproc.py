@@ -17,6 +17,20 @@ def randomsample(array, interval):
 	end_row = start_row + interval
 	return start_row, end_row
 
+##Takes a list of categories and returns a list of one hot encoded tuples where the first element is the 
+#Category and the second element is the one-hot encoding for that element
+
+def to_onehot(List):
+	final_list = []
+	for i in List:
+		position = List.index(i)
+		dummy_list = [0] * len(List)
+		dummy_list[position] = 1
+		final_list.append((i, dummy_list))
+	return final_list
+	
+#print to_onehot(["This", "that", "the other"])	
+
 
 
 
