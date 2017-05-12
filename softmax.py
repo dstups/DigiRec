@@ -3,13 +3,15 @@ import numpy as np
 import tensorflow as tf 
 from random import randint
 from tensorflow.python import debug as tf_debug
-from dataproc import to_array, randomsample
+from dataproc import to_array, randomsample, to_onehot
 
 
 arr_train = to_array('data/train.csv')
 arr_test = to_array('data/test.csv')
 
-print (arr_train.shape)
+print (arr_train[0:, 0:10])
+
+print (arr_train[:,1:].shape)
 
 x = tf.placeholder(tf.float32, [None, 784])
 W = tf.Variable(tf.zeros([784, 10]))
@@ -25,15 +27,20 @@ train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
  
 # create the session to run the graph
 with tf.Session() as sess:
-	sess = tf_debug.LocalCLIDebugWrapperSession(sess)
-	sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
+	# sess = tf_debug.LocalCLIDebugWrapperSession(sess)
+	# sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
 	tf.global_variables_initializer().run()
 
+	count = 0
 	for i in range(1000):
 		start_row, end_row = randomsample(arr_train, 100)
-		x_train = arr_train[start_row:end_row, 1:]
-		y_train = arr_train[start_row:end_row, 0]
+		x_train = arr_train[start_row:end_row,1:]
+		y_raw = arr_train[start_row:end_row, 0]
+		y_train = to_onehot(y_raw)
 		sess.run(train_step, feed_dict={x: x_train, y_: y_train})
+		count = count + 1
+		print (count)
+
 
 
 	correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
