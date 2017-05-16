@@ -29,7 +29,3 @@ def to_onehot(array):
 	
 
 
-
-
-
-
